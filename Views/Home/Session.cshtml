@@ -1,0 +1,123 @@
+@model scrum_ui.Models.Session;
+
+<script src="~/js/signalr.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+
+@{
+    if (Model.isOwner)
+    {
+        <div id="participants" class="row featurette">
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left;">
+                <h6 class="border-bottom pb-2 mb-0" style="vertical-align:middle;margin:0px 40px">Participant</h6>
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark"
+                            style="vertical-align:middle;margin:0px 40px">@Model.Email.Split('@')[0]</strong>
+                    </div>
+                    @{
+                        if (@Model.isOwner)
+                        {
+                            <img src="/img/sheriff.png" class="d-block" weight="55" height="55"
+                                style="vertical-align:middle;margin:0px 50px" />
+                        }
+                        else
+                        {
+                            <img src="@Model.Image" class="d-block" weight="55" height="55"
+                                style="vertical-align:middle;margin:0px 50px" />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">
+                        <p id="sprintinformation" style="color:#FFD700;"></p>
+                    </span>
+                </h4>
+                <table id="myTable" class="list-group mb-3">
+                    <tbody>
+                        <tr></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Create New Task</h4>
+                <form class="needs-validation" novalidate="">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Task Number</label>
+                            <input type="text" id="tbTaskNo" class="form-control" placeholder="ASTEI-10101" />
+                        </div>
+
+                        <div class="col-sm-6">
+                            <input type="button" id="btnCreateTask" value="Create"
+                                style="vertical-align:middle;margin:25px 60px 10px" class="btn btn-outline-warning"
+                                data-itemid="@Model.Key" onclick="CreateTask(@Model.Group.Id)" />
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <a class="btn btn-outline-success" asp-area="" asp-controller="Home" asp-action="Index">Back To Home</a>
+
+                    <hr class="my-4">
+                    <a class="btn btn-outline-success" onclick="CloseMeeting(@Model.Group.Id)">Close Meeting</a>
+                </form>
+            </div>
+        </div>
+    }
+}
+</div>
+
+@{
+    if (!Model.isOwner)
+    {
+        <h1 id="effortTaskNumber"></h1>
+        <div id="fibonacciNumbers" style="visibility: hidden;">
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn0" onclick="GetNumber(this)">0</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn1" onclick="GetNumber(this)">1</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn2" onclick="GetNumber(this)">2</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn3" onclick="GetNumber(this)">3</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn5" onclick="GetNumber(this)">5</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn8" onclick="GetNumber(this)">8</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn13" onclick="GetNumber(this)">13</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn21" onclick="GetNumber(this)">21</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn34" onclick="GetNumber(this)">34</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn55" onclick="GetNumber(this)">55</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn89" onclick="GetNumber(this)">89</button>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm" style="float: left; margin: 5px">
+                <button class="btn btn-outline-success" id="btn144" onclick="GetNumber(this)">144</button>
+            </div>
+        </div>
+    }
+}
+
+<script src="~/js/session.js" asp-append-version="true"></script>
+<script src="~/js/signalr.js" asp-append-version="true"></script>
+<script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>

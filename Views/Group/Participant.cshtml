@@ -1,0 +1,42 @@
+@model scrum_ui.ViewModel.ParticipantViewModel
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="~/lib/jquery/dist/clipboard.min.js"></script>
+
+<a class="btn btn-outline-success" asp-area="" asp-controller="Home" asp-action="Index">Back To Home</a>
+
+<!-- 3. Instantiate clipboard -->
+<script>
+    var clipboard = new ClipboardJS('.btn');
+
+    clipboard.on('success', function (e) {
+        console.log(e);
+    });
+</script>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Group Key</th>
+                <th scope="col">Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var partipant in Model.Participants)
+            {
+                <tr>
+                    <td>@partipant.Name</td>
+                    <td aria-readonly="true">@Model.Key</td>
+                    <td>
+                            <input id="foo_@partipant.Id" type="text" value="@Model.Redirect/home/session?key=@Model.Key&email=@partipant.Name&owner=false" />
+                            <button class="btn" data-clipboard-action="copy" data-clipboard-target="#foo_@partipant.Id">
+                                Clipboard
+                            </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

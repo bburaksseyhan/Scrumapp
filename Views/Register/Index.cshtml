@@ -1,0 +1,22 @@
+@model scrum_ui.ViewModel.RegisterModel
+
+
+@using (Html.BeginForm("SignUp", "Register", FormMethod.Post))
+{
+    <div class="form-group">
+    <label>Email address</label>
+    @Html.TextBoxFor(x=>x.Email, new { Class="form-control", placeholder="enter email address" })
+    @Html.ValidationMessageFor(x=>x.Email)
+</div>
+    <div class="form-group">
+    <label>Password</label>
+    @Html.EditorFor(model => model.Password, new { htmlAttributes = new {@class="form-control", placeholder="password"}})
+    @Html.ValidationMessageFor(x=>x.Password)
+</div>
+    <div class="form-group">
+    <label>Re-Password</label>
+    @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new {@class="form-control", placeholder="re-password"}})
+    @Html.ValidationMessageFor(x=>x.RePassword)
+</div>
+    <button type="submit" class="btn btn-primary">Register</button>
+}

@@ -1,0 +1,16 @@
+@model scrum_ui.ViewModel.LoginModel
+
+@using (Html.BeginForm("SignIn", "Login", FormMethod.Post))
+{
+  <div class="form-group">
+  <label for="exampleInputEmail1">Email address</label>
+    @Html.TextBoxFor(x=>x.Email,  new { Class="form-control", placeholder="enter email" })
+    @Html.ValidationMessageFor(x=>x.Email)
+</div>
+  <div class="form-group">
+  <label for="exampleInputPassword1">Password</label>
+   @Html.EditorFor(model => model.Password, new { htmlAttributes = new {@class="form-control", placeholder="password"}})
+   @Html.ValidationMessageFor(x=>x.Password)
+</div>
+  <button type="submit" class="btn btn-primary">Login</button>
+}

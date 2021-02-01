@@ -1,0 +1,29 @@
+@model scrum_ui.Models.Group;
+
+@{
+  ViewData["Title"] = "Home Page";
+}
+<a class="btn btn-outline-success" asp-area="" asp-controller="Home" asp-action="Index">Back To Home</a>
+
+<div class="form-group">
+  <button class="form-control" id="keygen">Generate Group Key</button>
+</div>
+
+@using(Html.BeginForm("CreateGroup", "Group", FormMethod.Post)){
+   <div class="form-group">
+    <label>Group name</label>
+     @Html.TextBoxFor(x=>x.Name, new { Class = "form-control",placeholder="Enter group name" })
+  </div>
+  <div class="form-check">
+    @Html.CheckBoxFor(x=>x.IsActive, new { Class = "form-check-input", @checked = "unchecked" })
+    <label class="form-check-label" for="exampleCheck1">Set status active</label>
+  </div>
+  <div class="form-group">
+    <label>Participants</label>
+     @Html.TextBoxFor(x=>x.Participants, new { Class = "form-control", placeholder="Enter participants" })
+  </div>
+  <div class="form-group">
+     @Html.TextBoxFor(x=>x.Key,new {@readonly = true, Class="form-control", placeholder="Click on the button to generate a new API key ..." , id="apikey" })
+  </div>  
+  <button type="submit" class="btn btn-primary">Create</button>
+}

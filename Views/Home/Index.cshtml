@@ -1,0 +1,46 @@
+﻿@model IEnumerable<scrum_ui.ViewModel.GroupViewModel>
+
+<a class="btn btn-outline-success" asp-area="" asp-controller="Group" asp-action="Index">Create Group</a>
+<div class="row">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">State</th>
+        <th scope="col">Created</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var group in Model)
+      {
+        <tr>
+          <td>@group.Name</td>
+          <td>
+            @if (group.IsActive)
+            {
+              <img height="40" width="40" src="/img/switch-on.png" />
+            }
+            else
+            {
+              <img height="40" width="40" src="/img/switch-off.png" />
+            }
+          </td>
+          <td>@group.CreateDate.ToString("MM/dd/yyyy HH:mm")
+            <img height="40" width="40" src="/img/clock.png" />
+          </td>
+          <td>
+            
+            <button onclick="CloseGroup(@group.Id)" class="btn btn-warning">Close</button>
+            <button onclick="RemoveGroup(@group.Id)" class="btn btn-danger">Delete</button>
+            <a id="btnJoin" href="@Url.Action("Session", "Home", new { key =  @group.Key , email = @group.Email, owner = true })" class="btn btn-info">Join</a>
+            <a href="@Url.Action("Participant","Group", new { key =  @group.Key })" class="btn btn-info">Participants</a> 
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<script src="~/js/group.js" asp-append-version="true"></script>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
